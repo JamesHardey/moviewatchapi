@@ -1,0 +1,17 @@
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\MovieWatchApiApplication.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\repository\EpisodeRepository.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\service\impl\EpisodeServiceImpl.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\config\SwaggerConfig.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\service\EpisodeService.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\controller\EpisodeController.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\controller\MovieController.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\dto\CreateEpisodeDTO.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\model\Episode.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\service\MovieService.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\service\impl\MovieServiceImpl.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\dto\EpisodeDTO.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\dto\MovieDTO.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\util\MovieMapper.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\repository\MovieRepository.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\dto\CreateMovieDTO.java
+C:\Users\HP\Documents\movie-watch\movie-watch-api\src\main\java\com\example\moviewatchapi\model\Movie.java
