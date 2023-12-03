@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/movies")
+@CrossOrigin("*")
 @Slf4j
 public class MovieController {
 
