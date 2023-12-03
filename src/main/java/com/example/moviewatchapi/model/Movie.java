@@ -24,6 +24,6 @@ public class Movie {
     private LocalDateTime updatedAt;
     private String imageUrl;
     private String youtubeUrl;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Episode> episodes = new ArrayList<>();
 }

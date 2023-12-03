@@ -7,6 +7,8 @@ import com.example.moviewatchapi.dto.MovieDTO;
 import com.example.moviewatchapi.model.Episode;
 import com.example.moviewatchapi.model.Movie;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MovieMapper {
@@ -21,14 +23,19 @@ public class MovieMapper {
         movieDTO.setUpdatedAt(movie.getUpdatedAt());
         movieDTO.setDescription(movie.getDescription());
 
-        movieDTO.setEpisodes(movie.getEpisodes().stream().map(episode -> new EpisodeDTO(
-                episode.getId(),
-                episode.getTitle(),
-                episode.getEpisodeNumber(),
-                episode.getDownloadUrl(),
-                episode.getUploadedAt()
-        )).collect(Collectors.toList()));
+        List<EpisodeDTO> episodeList = new ArrayList<>();
+        movie.getEpisodes().forEach(episode -> {
+            var episode1 = new EpisodeDTO(
+                    episode.getId(),
+                    episode.getTitle(),
+                    episode.getEpisodeNumber(),
+                    episode.getDownloadUrl(),
+                    episode.getUploadedAt()
+            );
+            episodeList.add(episode1);
+        });
 
+        movieDTO.setEpisodes(episodeList);
         return movieDTO;
     }
 
