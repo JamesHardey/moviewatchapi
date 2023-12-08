@@ -2,6 +2,7 @@ package com.example.moviewatchapi.service.impl;
 
 import com.example.moviewatchapi.dto.CreateEpisodeDTO;
 import com.example.moviewatchapi.dto.CreateMovieDTO;
+import com.example.moviewatchapi.dto.EpisodeDTO;
 import com.example.moviewatchapi.dto.MovieDTO;
 import com.example.moviewatchapi.model.Episode;
 import com.example.moviewatchapi.model.Movie;
@@ -78,6 +79,10 @@ public class MovieServiceImpl implements MovieService {
         movie.setUpdatedAt(LocalDateTime.now());
         movie.setImageUrl(movieDTO.getImageUrl());
         movie.setYoutubeUrl(movieDTO.getYoutubeUrl());
+
+        List<EpisodeDTO> episodesDtos = movieDTO.getEpisodes();
+        movie.setEpisodes(episodesDtos.stream().map(MovieMapper::mapToEntity)
+                .collect(Collectors.toList()));
         movie = movieRepository.save(movie);
         return convertToDTO(movie);
     }
