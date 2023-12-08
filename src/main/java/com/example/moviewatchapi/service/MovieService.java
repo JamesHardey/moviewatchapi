@@ -18,7 +18,7 @@ public interface MovieService {
 
    MovieDTO updateMovie(Integer id, MovieDTO movieDTO);
 
-    MovieDTO addEpisodeToMovie(Integer movieId,List<CreateEpisodeDTO> episodesDTO);
+    MovieDTO addEpisodeToMovie(Integer movieId,CreateEpisodeDTO episodesDTO);
 
    void deleteMovie(Integer id);
 

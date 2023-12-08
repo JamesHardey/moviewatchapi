@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/movies")
 @CrossOrigin("*")
+@RequestMapping("/movies")
 @Slf4j
 public class MovieController {
 
@@ -54,7 +54,7 @@ public class MovieController {
 
 
     @PutMapping("/{movieId}/episodes")
-    public ResponseEntity<MovieDTO> addEpisodeToMovie(@PathVariable Integer movieId, @RequestBody List<CreateEpisodeDTO> episodesDTO) {
+    public ResponseEntity<MovieDTO> addEpisodeToMovie(@PathVariable Integer movieId, @RequestBody CreateEpisodeDTO episodesDTO) {
         System.out.println(movieId);
         MovieDTO movie = movieService.addEpisodeToMovie(movieId, episodesDTO);
         return new ResponseEntity<>(movie, HttpStatus.OK);

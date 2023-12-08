@@ -83,14 +83,13 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public MovieDTO addEpisodeToMovie(Integer movieId, List<CreateEpisodeDTO> episodesDTO) {
+    public MovieDTO addEpisodeToMovie(Integer movieId, CreateEpisodeDTO episodesDTO) {
        var dateNow = LocalDateTime.now();
         Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new RuntimeException("Movie not found"));
-        episodesDTO
-                .forEach(episode -> {
-                    Episode episode1 = episodeRepository.save(MovieMapper.mapToEntity(episode));
-                    movie.getEpisodes().add(episode1);
-                });
+        Episode episode = MovieMapper.mapToEntity(episodesDTO);
+        episode.setUploadedAt(dateNow);
+        Episode episode1 = episodeRepository.save(episode);
+        movie.getEpisodes().add(episode1);
         movie.setUpdatedAt(dateNow);
         Movie movie1 = movieRepository.save(movie);
         return MovieMapper.mapToDTO(movie1);
