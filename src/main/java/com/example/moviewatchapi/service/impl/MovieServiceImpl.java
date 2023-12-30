@@ -10,18 +10,21 @@ import com.example.moviewatchapi.repository.EpisodeRepository;
 import com.example.moviewatchapi.repository.MovieRepository;
 import com.example.moviewatchapi.service.MovieService;
 import com.example.moviewatchapi.util.MovieMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
 public class MovieServiceImpl implements MovieService {
 
-    private MovieRepository movieRepository;
+    private final MovieRepository movieRepository;
 
-    private EpisodeRepository episodeRepository;
+    private final EpisodeRepository episodeRepository;
 
    public MovieServiceImpl(
            MovieRepository movieRepository,
@@ -47,9 +50,9 @@ public class MovieServiceImpl implements MovieService {
 
     // Method to get all movies from the database
     @Override
-    public List<MovieDTO> getAllMovies() {
-        List<Movie> movies = movieRepository.findAll();
-        return movies.stream().map(this::convertToDTO).collect(Collectors.toList());
+    public Page<MovieDTO> getAllMovies(Pageable pageable) {
+        return movieRepository.findAll(pageable)
+                .map(this::convertToDTO);
     }
 
     // Method to get a movie by id from the database
@@ -72,20 +75,32 @@ public class MovieServiceImpl implements MovieService {
     // Method to update a movie in the database
     @Override
     public MovieDTO updateMovie(Integer id, MovieDTO movieDTO) {
-        Movie movie = movieRepository.findById(id).orElseThrow(() -> new RuntimeException("Movie not found"));
+        Movie movie = movieRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Movie not found"));
+
+        LocalDateTime now = LocalDateTime.now();
+
         movie.setTitle(movieDTO.getTitle());
         movie.setDescription(movieDTO.getDescription());
-        movie.setCreatedAt(movieDTO.getCreatedAt());
-        movie.setUpdatedAt(LocalDateTime.now());
+        movie.setUpdatedAt(now);
         movie.setImageUrl(movieDTO.getImageUrl());
         movie.setYoutubeUrl(movieDTO.getYoutubeUrl());
 
         List<EpisodeDTO> episodesDtos = movieDTO.getEpisodes();
-        movie.setEpisodes(episodesDtos.stream().map(MovieMapper::mapToEntity)
-                .collect(Collectors.toList()));
+        List<Episode> episodes = episodesDtos.stream()
+                .map(episodeDTO -> {
+                    episodeDTO.setUploadedAt(now);
+                    return MovieMapper.mapToEntity(episodeDTO);
+                })
+                .collect(Collectors.toList());
+
+        movie.setEpisodes(episodes);
+        movie.setUpdatedAt(now);
+
         movie = movieRepository.save(movie);
         return convertToDTO(movie);
     }
+
 
     @Override
     public MovieDTO addEpisodeToMovie(Integer movieId, CreateEpisodeDTO episodesDTO) {
@@ -105,4 +120,21 @@ public class MovieServiceImpl implements MovieService {
     public void deleteMovie(Integer id) {
         movieRepository.deleteById(id);
     }
+
+    @Override
+    public void deleteEpisodeFromMovie(Integer movieId, Integer episodeId) {
+        Movie movie = movieRepository.findById(movieId)
+                .orElseThrow();
+
+        Episode episodeToDelete = movie.getEpisodes().stream()
+                .filter(episode -> Objects.equals(episode.getId(), episodeId))
+                .findFirst()
+                .orElseThrow();
+
+        movie.getEpisodes().remove(episodeToDelete);
+        movieRepository.save(movie);
+
+        episodeRepository.delete(episodeToDelete);
+    }
+
 }

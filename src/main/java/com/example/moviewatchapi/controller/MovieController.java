@@ -5,6 +5,8 @@ import com.example.moviewatchapi.dto.CreateMovieDTO;
 import com.example.moviewatchapi.dto.MovieDTO;
 import com.example.moviewatchapi.service.MovieService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,12 @@ public class MovieController {
     }
     // Method to get all movies
     @GetMapping
-    public ResponseEntity<List<MovieDTO>> getAllMovies() {
-        List<MovieDTO> movies = movieService.getAllMovies();
+    public ResponseEntity<Page<MovieDTO>> getAllMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<MovieDTO> movies = movieService.getAllMovies(pageRequest);
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
@@ -54,16 +60,26 @@ public class MovieController {
 
 
     @PutMapping("/{movieId}/episodes")
-    public ResponseEntity<MovieDTO> addEpisodeToMovie(@PathVariable Integer movieId, @RequestBody CreateEpisodeDTO episodesDTO) {
-        System.out.println(movieId);
+    public ResponseEntity<MovieDTO> addEpisodeToMovie(
+            @PathVariable Integer movieId,
+            @RequestBody CreateEpisodeDTO episodesDTO) {
         MovieDTO movie = movieService.addEpisodeToMovie(movieId, episodesDTO);
-        return new ResponseEntity<>(movie, HttpStatus.OK);
+        return new ResponseEntity<>(movie, HttpStatus.CREATED);
     }
 
     // Method to delete a movie
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMovie(@PathVariable Integer id) {
         movieService.deleteMovie(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/{movieId}/episode/{episodeId}")
+    public ResponseEntity<Void> deleteEpisodeFromMovie(
+            @PathVariable Integer movieId,
+            @PathVariable Integer episodeId
+    ){
+        movieService.deleteEpisodeFromMovie(movieId,episodeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
