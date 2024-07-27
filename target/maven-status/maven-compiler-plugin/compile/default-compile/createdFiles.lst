@@ -1,1 +1,17 @@
+com\example\moviewatchapi\model\Episode.class
 com\example\moviewatchapi\controller\AppController.class
+com\example\moviewatchapi\util\MovieMapper.class
+com\example\moviewatchapi\dto\EpisodeDTO.class
+com\example\moviewatchapi\model\Movie.class
+com\example\moviewatchapi\service\MovieService.class
+com\example\moviewatchapi\dto\CreateMovieDTO.class
+com\example\moviewatchapi\repository\MovieRepository.class
+com\example\moviewatchapi\dto\MovieDTO.class
+com\example\moviewatchapi\service\impl\EpisodeServiceImpl.class
+com\example\moviewatchapi\MovieWatchApiApplication.class
+com\example\moviewatchapi\config\SwaggerConfig.class
+com\example\moviewatchapi\repository\EpisodeRepository.class
+com\example\moviewatchapi\controller\MovieController.class
+com\example\moviewatchapi\dto\CreateEpisodeDTO.class
+com\example\moviewatchapi\service\EpisodeService.class
+com\example\moviewatchapi\service\impl\MovieServiceImpl.class
